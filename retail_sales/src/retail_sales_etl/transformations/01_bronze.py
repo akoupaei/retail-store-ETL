@@ -50,6 +50,28 @@ def stores_raw():
             .format("cloudFiles")
             .option("cloudFiles.format", "csv")
             .option("header", "true")
-            .load(f"{path}stores.csv"
+            .load(f"{path}stores*.csv")
     )
+            
+@dp.table(name="bronze_oil_prices", comment="Raw oil price data streamed in from CSV files")
+def oil_prices_raw():
+    """
+    Reads the raw oil price data as a streaming source.
+    """
+    path = SOURCE_PATH
+
+    schema = """
+        date DATE,
+        dcoilwtico DOUBLE
+    """
+
+    return (
+        spark.readStream.schema(schema)
+            .format("cloudFiles")
+            .option("cloudFiles.format", "csv")
+            .option("header", "true")
+            .load(f"{path}oil*.csv")
+    )
+
+
 

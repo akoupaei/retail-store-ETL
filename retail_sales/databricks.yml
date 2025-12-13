@@ -27,7 +27,7 @@ targets:
       host: https://dbc-f80ed02c-3092.cloud.databricks.com
     variables:
       catalog: cscie103_catalog
-      schema: ${workspace.current_user.short_name}
+      schema: final_project
   prod:
     mode: production
     workspace:
