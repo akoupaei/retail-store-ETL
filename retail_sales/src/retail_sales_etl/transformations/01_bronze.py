@@ -17,7 +17,7 @@ def sales_train_raw():
 
     schema = """
         id INTEGER,
-        data DATE,
+        date DATE,
         store_nbr INTEGER,
         family STRING,
         sales DOUBLE,
