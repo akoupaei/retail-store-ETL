@@ -1,0 +1,610 @@
+{
+  "datasets": [
+    {
+      "name": "dataset1",
+      "displayName": "future_sales_predictions",
+      "queryLines": [
+        "SELECT * FROM cscie103_catalog.final_project.future_sales_predictions"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "name": "page1",
+      "displayName": "Top Management - National Level",
+      "layout": [
+        {
+          "widget": {
+            "name": "text_box1",
+            "multilineTextboxSpec": {
+              "lines": [
+                "<span style=\"font-size:18px\">Demand Forecasting by Product Family and Stor</span>e"
+              ]
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 6,
+            "height": 1
+          }
+        },
+        {
+          "widget": {
+            "name": "38b1d9aa",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "dataset1",
+                  "fields": [
+                    {
+                      "name": "sum(sales_prediction)",
+                      "expression": "SUM(`sales_prediction`)"
+                    },
+                    {
+                      "name": "product_family",
+                      "expression": "`product_family`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "sum(sales_prediction)",
+                  "axis": {
+                    "title": "Predicted Sales "
+                  },
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "y": {
+                  "fieldName": "product_family",
+                  "displayName": "Product",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Expected Demand by Product Category (Next 15 Days)",
+                "showDescription": false,
+                "description": "Aggregated Forecast – "
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 1,
+            "width": 3,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "1d995f7b",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "dataset1",
+                  "fields": [
+                    {
+                      "name": "sum(sales_prediction)",
+                      "expression": "SUM(`sales_prediction`)"
+                    },
+                    {
+                      "name": "store_nbr",
+                      "expression": "`store_nbr`"
+                    },
+                    {
+                      "name": "product_family",
+                      "expression": "`product_family`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "heatmap",
+              "encodings": {
+                "x": {
+                  "fieldName": "store_nbr",
+                  "axis": {
+                    "title": "Store"
+                  },
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "y": {
+                  "fieldName": "product_family",
+                  "axis": {
+                    "title": "Product"
+                  },
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "color": {
+                  "fieldName": "sum(sales_prediction)",
+                  "legend": {
+                    "title": "Predicted Sales"
+                  },
+                  "scale": {
+                    "type": "quantitative",
+                    "colorRamp": {
+                      "mode": "scheme",
+                      "scheme": "reds"
+                    }
+                  }
+                },
+                "label": {
+                  "show": false
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Demand Forecast Heatmap by Product Family and Store (next 15 days)",
+                "showDescription": true,
+                "description": "This view highlights expected demand intensity across product families and stores to support inventory allocation and replenishment decisions."
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 7,
+            "width": 6,
+            "height": 7
+          }
+        },
+        {
+          "widget": {
+            "name": "35a65943",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "dataset1",
+                  "fields": [
+                    {
+                      "name": "product_family",
+                      "expression": "`product_family`"
+                    },
+                    {
+                      "name": "daily(date)",
+                      "expression": "DATE_TRUNC(\"DAY\", `date`)"
+                    },
+                    {
+                      "name": "sum(sales_prediction)",
+                      "expression": "SUM(`sales_prediction`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "daily(date)",
+                  "scale": {
+                    "type": "temporal"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(sales_prediction)",
+                  "axis": {
+                    "title": "Predicted Sales"
+                  },
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "product_family",
+                  "legend": {
+                    "title": "Product"
+                  },
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Predicted Sales Trend by Product Family (Next 15 Days)"
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 1,
+            "width": 3,
+            "height": 6
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS"
+    },
+    {
+      "name": "f2bb05e1",
+      "displayName": "Global Filters",
+      "layout": [
+        {
+          "widget": {
+            "name": "b1aa1eba",
+            "queries": [
+              {
+                "name": "dashboards/01f0d994cf781fccbc0aafbdd7a16e3c/datasets/01f0d994cf79194b8f376666195b1543_date",
+                "query": {
+                  "datasetName": "dataset1",
+                  "fields": [
+                    {
+                      "name": "date",
+                      "expression": "`date`"
+                    },
+                    {
+                      "name": "date_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "filter-date-range-picker",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "date",
+                    "queryName": "dashboards/01f0d994cf781fccbc0aafbdd7a16e3c/datasets/01f0d994cf79194b8f376666195b1543_date"
+                  }
+                ]
+              },
+              "frame": {
+                "showTitle": true
+              },
+              "selection": {
+                "defaultSelection": {
+                  "range": {
+                    "dataType": "DATE",
+                    "min": {
+                      "value": "2017-08-16T00:00:00.000"
+                    },
+                    "max": {
+                      "value": "2017-08-31T23:59:59.999"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 2
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_GLOBAL_FILTERS"
+    },
+    {
+      "name": "8803955a",
+      "displayName": "Local Manager - Local Store",
+      "layout": [
+        {
+          "widget": {
+            "name": "7575624f",
+            "multilineTextboxSpec": {
+              "lines": [
+                "<span style=\"font-size:18px\">Demand Forecasting by Product Family and Store 20</span>"
+              ]
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 6,
+            "height": 1
+          }
+        },
+        {
+          "widget": {
+            "name": "bcb2f481",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "dataset1",
+                  "fields": [
+                    {
+                      "name": "sum(sales_prediction)",
+                      "expression": "SUM(`sales_prediction`)"
+                    },
+                    {
+                      "name": "product_family",
+                      "expression": "`product_family`"
+                    }
+                  ],
+                  "filters": [
+                    {
+                      "expression": "`store_nbr` IN (20)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "sum(sales_prediction)",
+                  "axis": {
+                    "title": "Predicted Sales"
+                  },
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "y": {
+                  "fieldName": "product_family",
+                  "axis": {
+                    "title": "Product"
+                  },
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Expected Demand by Product Category (Next 15 Days) - Store 20",
+                "showDescription": false
+              }
+            }
+          },
+          "position": {
+            "x": 4,
+            "y": 1,
+            "width": 2,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "6f8046aa",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "dataset1",
+                  "fields": [
+                    {
+                      "name": "product_family",
+                      "expression": "`product_family`"
+                    },
+                    {
+                      "name": "daily(date)",
+                      "expression": "DATE_TRUNC(\"DAY\", `date`)"
+                    },
+                    {
+                      "name": "sum(sales_prediction)",
+                      "expression": "SUM(`sales_prediction`)"
+                    }
+                  ],
+                  "filters": [
+                    {
+                      "expression": "`store_nbr` IN (20)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "daily(date)",
+                  "axis": {
+                    "title": "Date"
+                  },
+                  "scale": {
+                    "type": "temporal"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(sales_prediction)",
+                  "axis": {
+                    "title": "Predicted Sales"
+                  },
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "product_family",
+                  "legend": {
+                    "title": "Product"
+                  },
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Predicted Sales Trend by Product Family (Next 15 Days) - Store 20"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 7,
+            "width": 6,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "42f77858",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "dataset1",
+                  "fields": [
+                    {
+                      "name": "sum(sales_prediction)",
+                      "expression": "SUM(`sales_prediction`)"
+                    },
+                    {
+                      "name": "product_family",
+                      "expression": "`product_family`"
+                    }
+                  ],
+                  "filters": [
+                    {
+                      "expression": "`store_nbr` IN (20)"
+                    },
+                    {
+                      "expression": "IN_RANGE(`date`, DATE'2017-08-16T00:00:00.000', DATE'2017-08-23T23:59:59.999')"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "sum(sales_prediction)",
+                  "axis": {
+                    "title": "Predicted Sales"
+                  },
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "y": {
+                  "fieldName": "product_family",
+                  "axis": {
+                    "title": "Product"
+                  },
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Expected Demand by Product Category (Next 7 Days) - Store 20",
+                "showDescription": false
+              }
+            }
+          },
+          "position": {
+            "x": 2,
+            "y": 1,
+            "width": 2,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "e662bcd2",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "dataset1",
+                  "fields": [
+                    {
+                      "name": "sum(sales_prediction)",
+                      "expression": "SUM(`sales_prediction`)"
+                    },
+                    {
+                      "name": "product_family",
+                      "expression": "`product_family`"
+                    }
+                  ],
+                  "filters": [
+                    {
+                      "expression": "`store_nbr` IN (20)"
+                    },
+                    {
+                      "expression": "`date` <=> DATE'2017-08-16T00:00:00.000'"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "sum(sales_prediction)",
+                  "axis": {
+                    "title": "Predicted Sales"
+                  },
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "y": {
+                  "fieldName": "product_family",
+                  "axis": {
+                    "title": "Product"
+                  },
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Expected Demand by Product Category (Tomorow) - Store 20",
+                "showDescription": false
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 1,
+            "width": 2,
+            "height": 6
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "widgetHeaderAlignment": "ALIGNMENT_UNSPECIFIED"
+    },
+    "applyModeEnabled": false
+  }
+}

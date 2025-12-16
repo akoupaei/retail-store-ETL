@@ -1,32 +1,47 @@
-# A sample job for retail_sales.
-
 resources:
   jobs:
-    sample_job:
-      name: sample_job
-
+    dev_dak6610_sample_job:
+      name: "[dev dak6610] sample_job"
       trigger:
-        # Run this job every day, exactly one day from the last run; see https://docs.databricks.com/api/workspace/jobs/create#trigger
+        pause_status: PAUSED
         periodic:
           interval: 1
           unit: DAYS
-
-      #email_notifications:
-      #  on_failure:
-      #    - your_email@example.com
-
-      parameters:
-        - name: catalog
-          default: ${var.catalog}
-        - name: schema
-          default: ${var.schema}
-
+      max_concurrent_runs: 4
       tasks:
         - task_key: refresh_pipeline
           pipeline_task:
-            pipeline_id: ${resources.pipelines.retail_sales_etl.id}
-
+            pipeline_id: 3406d134-8529-4da5-a033-242f9311de46
+            full_refresh: false
+        - task_key: ml_feature_engineering
+          depends_on:
+            - task_key: refresh_pipeline
+          notebook_task:
+            notebook_path: /Workspace/Users/dak6610@g.harvard.edu/Final_Project/retail-store-ETL/ml/01_feature_engineering
+            source: WORKSPACE
+        - task_key: model_development
+          depends_on:
+            - task_key: ml_feature_engineering
+          notebook_task:
+            notebook_path: /Workspace/Users/dak6610@g.harvard.edu/Final_Project/retail-store-ETL/ml/02_model_developement
+            source: WORKSPACE
+        - task_key: dashboard_prep
+          depends_on:
+            - task_key: model_development
+          notebook_task:
+            notebook_path: /Workspace/Users/dak6610@g.harvard.edu/Final_Project/retail-store-ETL/ml/03_dashboard_prep
+            source: WORKSPACE
+      tags:
+        dev: dak6610
+      queue:
+        enabled: true
+      parameters:
+        - name: catalog
+          default: cscie103_catalog
+        - name: schema
+          default: dak6610
       environments:
         - environment_key: default
           spec:
             environment_version: "2"
+      performance_target: PERFORMANCE_OPTIMIZED
