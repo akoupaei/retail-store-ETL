@@ -74,7 +74,6 @@ valid_transaction = {
     "valid_transaction": "transactions >= 0",
 }
 
-
 @dp.table(
     name="transactions",
     comment="Streaming table containing processed transactions data",
